@@ -44,3 +44,34 @@ class CustomLoginView(LoginView):
 # Logout view using Django's built-in LogoutView
 class CustomLogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
+
+
+# Check if the user is an admin
+def is_admin(user):
+    return user.is_authenticated and user.userprofile.role == 'Admin'
+
+# Admin view (Only accessible by Admin users)
+@user_passes_test(Admin)
+def Admin(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+def is_librarian(user):
+    return user.is_authenticated and user.userprofile.role == 'Librarian'
+
+def is_member(user):
+    return user.is_authenticated and user.userprofile.role == 'Member'
+
+# Admin View (Accessible by Admin users only)
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+# Librarian View (Accessible by Librarian users only)
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+# Member View (Accessible by Member users only)
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
