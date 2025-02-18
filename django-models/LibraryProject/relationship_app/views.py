@@ -11,6 +11,21 @@ from .models import UserProfile
 from django.contrib.auth.decorators import permission_required
 
 
+
+# Admin view (Only accessible by Admin users)
+@user_passes_test(Admin)
+def Admin(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+def is_librarian(user):
+    return user.is_authenticated and user.userprofile.role == 'Librarian'
+
+def is_member(user):
+    return user.is_authenticated and user.userprofile.role == 'Member'
+
+
+
+
 # Admin view restricted to users with the Admin role
 @user_passes_test(is_admin)
 def admin_view(request):
