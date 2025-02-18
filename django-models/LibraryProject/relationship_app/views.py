@@ -11,6 +11,17 @@ from .models import UserProfile
 from django.contrib.auth.decorators import permission_required
 
 
+@role_required('Admin')
+def admin_view(request):
+    return render(request, 'admin_view.html')
+
+@role_required('Librarian')
+def librarian_view(request):
+    return render(request, 'librarian_view.html')
+
+@role_required('Member')
+def member_view(request):
+    return render(request, 'member_view.html')
 
 
 
