@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 from .models import UserProfile
+from django.contrib.auth.decorators import permission_required
 
 # views.py
 # views.py
