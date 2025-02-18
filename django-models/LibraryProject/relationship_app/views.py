@@ -11,39 +11,46 @@ from .models import UserProfile
 from django.contrib.auth.decorators import permission_required
 
 # views.py
-# views.py
 from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 
-# Check if the user is an admin
-def is_admin(user):
-    return user.is_authenticated and user.userprofile.role == 'Admin'
 
-# Admin view (Only accessible by Admin users)
-@user_passes_test(Admin)
-def Admin(request):
-    return render(request, 'relationship_app/admin_view.html')
+from django.contrib.auth.decorators import user_passes_test
 
-def is_librarian(user):
-    return user.is_authenticated and user.userprofile.role == 'Librarian'
-
-def is_member(user):
-    return user.is_authenticated and user.userprofile.role == 'Member'
-
-# Admin View (Accessible by Admin users only)
-@user_passes_test(is_admin)
 def admin_view(request):
-    return render(request, 'relationship_app/admin_view.html')
+    # Check if the user has the 'Admin' role
+    if request.user.userprofile.role == 'Admin':
+        return render(request, 'relationship_app/admin_view.html') 
+    else:
+        return HttpResponseForbidden("Access Denied")
 
-# Librarian View (Accessible by Librarian users only)
-@user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html')
+    if request.user.userprofile.role == 'Librarian':
+        return render(request, 'relationship_app/librarian_view.html') 
+    else:
+        return HttpResponseForbidden("Access Denied")
 
-# Member View (Accessible by Member users only)
-@user_passes_test(is_member)
 def member_view(request):
+    if request.user.userprofile.role == 'Member':
+        return render(request, 'relationship_app/member_view.html') 
+    else:
+        return HttpResponseForbidden("Access Denied")
+
+# Using @user_passes_test decorator for more concise role checks
+
+@user_passes_test(lambda u: u.userprofile.role == 'Admin')
+def admin_view_decorator(request):
+    return render(request, 'relationship_app/admin_view.html') 
+
+@user_passes_test(lambda u: u.userprofile.role == 'Librarian')
+def librarian_view_decorator(request):
+    return render(request, 'relationship_app/librarian_view.html') 
+
+@user_passes_test(lambda u: u.userprofile.role == 'Member')
+def member_view_decorator(request):
     return render(request, 'relationship_app/member_view.html')
+
+
 
 # Add Book
 @permission_required('relationship_app.can_add_book', raise_exception=True)
@@ -75,39 +82,9 @@ def delete_book(request, pk):
     book.delete()
     return redirect('book_list')  # Redirect to book list after deleting
 
-# Helper function to check if the user is an admin
-def is_admin(user):
-    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
-# Admin view restricted to users with the Admin role
-@user_passes_test(is_admin)
-def admin_view(request):
-    return render(request, 'relationship_app/admin_view.html', {'role': 'Admin'})
 
-# Helper functions to check user roles
-def is_admin(user):
-    return user.is_authenticated and user.userprofile.role == 'Admin'
 
-def is_librarian(user):
-    return user.is_authenticated and user.userprofile.role == 'Librarian'
-
-def is_member(user):
-    return user.is_authenticated and user.userprofile.role == 'Member'
-
-# Admin view restricted to Admin role
-@user_passes_test(is_admin)
-def admin_view(request):
-    return render(request, 'relationship_app/admin_view.html', {'role': 'Admin'})
-
-# Librarian view restricted to Librarian role
-@user_passes_test(is_librarian)
-def librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html', {'role': 'Librarian'})
-
-# Member view restricted to Member role
-@user_passes_test(is_member)
-def member_view(request):
-    return render(request, 'relationship_app/member_view.html', {'role': 'Member'})
 
 # Custom view for user registration
 def register(request):
@@ -128,13 +105,6 @@ class CustomLoginView(LoginView):
 # Logout view using Django's built-in LogoutView
 class CustomLogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
-
-
-
-
-
-
-
 
 
 
