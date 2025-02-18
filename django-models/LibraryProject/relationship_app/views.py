@@ -6,6 +6,8 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import user_passes_test
+from .models import UserProfile
 
 # Create your views here.
 
@@ -65,7 +67,6 @@ def is_member(user):
 # Helper function to check if the user is an admin
 def is_admin(user):
     return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
-
 
 # Admin View (Accessible by Admin users only)
 @user_passes_test(is_admin)
