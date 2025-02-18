@@ -10,45 +10,29 @@ from django.shortcuts import render
 from .models import UserProfile
 from django.contrib.auth.decorators import permission_required
 
-# views.py
-from django.shortcuts import render
-from django.contrib.auth.decorators import user_passes_test
 
+def is_admin(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
-from django.contrib.auth.decorators import user_passes_test
+def is_librarian(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
+def is_member(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
+
+@user_passes_test(is_admin)
 def admin_view(request):
-    # Check if the user has the 'Admin' role
-    if request.user.userprofile.role == 'Admin':
-        return render(request, 'relationship_app/admin_view.html') 
-    else:
-        return HttpResponseForbidden("Access Denied")
+    return render(request, 'relationship_app/admin_view.html')
 
+@user_passes_test(is_librarian)
 def librarian_view(request):
-    if request.user.userprofile.role == 'Librarian':
-        return render(request, 'relationship_app/librarian_view.html') 
-    else:
-        return HttpResponseForbidden("Access Denied")
+    return render(request, 'relationship_app/librarian_view.html')
 
+@user_passes_test(is_member)
 def member_view(request):
-    if request.user.userprofile.role == 'Member':
-        return render(request, 'relationship_app/member_view.html') 
-    else:
-        return HttpResponseForbidden("Access Denied")
-
-# Using @user_passes_test decorator for more concise role checks
-
-@user_passes_test(lambda u: u.userprofile.role == 'Admin')
-def admin_view_decorator(request):
-    return render(request, 'relationship_app/admin_view.html') 
-
-@user_passes_test(lambda u: u.userprofile.role == 'Librarian')
-def librarian_view_decorator(request):
-    return render(request, 'relationship_app/librarian_view.html') 
-
-@user_passes_test(lambda u: u.userprofile.role == 'Member')
-def member_view_decorator(request):
     return render(request, 'relationship_app/member_view.html')
+
+
 
 
 
