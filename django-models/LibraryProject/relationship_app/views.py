@@ -10,6 +10,9 @@ from django.shortcuts import render
 from .models import UserProfile
 from django.contrib.auth.decorators import permission_required
 
+def is_admin(user):
+    return user.is_authenticated and user.userprofile.role == 'Admin'
+    
 # Admin view (Only accessible by Admin users)
 @user_passes_test(Admin)
 def Admin(request):
