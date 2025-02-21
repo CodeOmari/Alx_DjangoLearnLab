@@ -13,23 +13,26 @@ from django.contrib.auth.decorators import permission_required
 def is_admin(user):
     return user.is_authenticated and user.userprofile.role == 'Admin'
 
-# Admin view (Only accessible by Admin users)
-@user_passes_test(Admin)
-def Admin(request):
-    return render(request, 'relationship_app/admin_view.html')
+def is_librarian(user):
+    return user.is_authenticated and user.userprofile.role == 'Librarian'
 
+def is_member(user):
+    return user.is_authenticated and user.userprofile.role == 'Member'
+
+# Admin view restricted to Admin role
 @user_passes_test(is_admin)
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html', {'role': 'Admin'})
-    
+
+# Librarian view restricted to Librarian role
 @user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html')
+    return render(request, 'relationship_app/librarian_view.html', {'role': 'Librarian'})
 
-# Member View (Accessible by Member users only)
+# Member view restricted to Member role
 @user_passes_test(is_member)
 def member_view(request):
-    return render(request, 'relationship_app/member_view.html')
+    return render(request, 'relationship_app/member_view.html', {'role': 'Member'})
 
 
 # Add Book
