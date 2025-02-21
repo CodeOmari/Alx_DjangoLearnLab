@@ -10,6 +10,10 @@ from django.shortcuts import render
 from .models import UserProfile
 from django.contrib.auth.decorators import permission_required
 
+# Admin view (Only accessible by Admin users)
+@user_passes_test(Admin)
+def Admin(request):
+    return render(request, 'relationship_app/admin_view.html')
 
 @user_passes_test(is_admin)
 def admin_view(request):
