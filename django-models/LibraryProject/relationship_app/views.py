@@ -10,6 +10,9 @@ from django.shortcuts import render
 from .models import UserProfile
 from django.contrib.auth.decorators import permission_required
 
+def home(request):
+    return render(request, 'relationship_app/master.html')
+
 def is_admin(user):
     return user.userprofile.role == 'Admin'
 
