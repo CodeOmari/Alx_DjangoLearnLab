@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mpdgs%hv6_r&y@vc%$6sq)!xl(9ep2$by+pip4^vo^5sco*7#4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -124,3 +124,31 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
+
+# Add secure settings
+SECURE_BROWSER_XSS_FILTER = True # Enable XSS filtering in browsers
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True # Prevent MIME type sniffing
+
+# Enforce cookies over HTTPS
+CSRF_COOKIE_SECURE = True # Ensure CSRF cookies are sent over HTTPS
+SESSION_COOKIE_SECURE = True # Ensure session cookies are sent over HTTPS
+
+# Configure CSP (django-csp)
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", 'https://trusted-scripts.com')
+CSP_STYLE_SRC = ("'self'", 'https://trusted-styles.com')
+
+
+
+# Enforce HTTPS for all requests
+SECURE_SSL_REDIRECT = True  # Redirects all non-HTTPS requests to HTTPS
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # Enforce HTTPS for 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Include subdomains in HSTS policy
+SECURE_HSTS_PRELOAD = True  # Allow site to be included in HSTS preload list
+
+# Use when behind a proxy to detect HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
