@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from .permissions import IsAdminOrReadOnly
 from api.models import Book
 from api.serializers import BookSerializer
+from rest_framework import filters 
+from rest_framework.filters import SearchFilter, OrderingFilterr
+
 
 # Create your views here.
 
