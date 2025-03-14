@@ -6,6 +6,8 @@ from api.models import Book
 from api.serializers import BookSerializer
 from rest_framework import filters 
 from rest_framework.filters import SearchFilter, OrderingFilterr
+from django_filters import rest_framework 
+from rest_framework import generics
 
 
 # Create your views here.
