@@ -1,8 +1,6 @@
-<<<<<<< HEAD
+
 #!/home/omari/DRF/api/venv/bin/python3
-=======
 #!/home/omari/venv/bin/python3
->>>>>>> f86e7a69a6e12f3e8340ccb8194f3d98461ccc3e
 # -*- coding: utf-8 -*-
 import re
 import sys
