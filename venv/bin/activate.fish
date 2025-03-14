@@ -33,7 +33,11 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 set -gx VIRTUAL_ENV /home/omari/DRF/api/venv
+=======
+set -gx VIRTUAL_ENV /home/omari/venv
+>>>>>>> f86e7a69a6e12f3e8340ccb8194f3d98461ccc3e
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

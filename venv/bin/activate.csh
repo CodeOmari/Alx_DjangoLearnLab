@@ -9,7 +9,11 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 setenv VIRTUAL_ENV /home/omari/DRF/api/venv
+=======
+setenv VIRTUAL_ENV /home/omari/venv
+>>>>>>> f86e7a69a6e12f3e8340ccb8194f3d98461ccc3e
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/"bin":$PATH"
