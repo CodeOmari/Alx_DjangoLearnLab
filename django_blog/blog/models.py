@@ -4,6 +4,11 @@ from django.conf import settings
 
 # Create your models here.
 
+class CustomUser(AbstractUser):
+    bio = models.TextField(blank=True, null=True, help_text="A short bio about yourself.")
+
+    
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
