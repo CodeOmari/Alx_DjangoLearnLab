@@ -1,13 +1,14 @@
 from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm, CustomUserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CommentForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from .models import Post, Comment
 
 # Create your views here.
 
