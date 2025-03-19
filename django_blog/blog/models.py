@@ -7,7 +7,16 @@ from django.conf import settings
 class CustomUser(AbstractUser):
     bio = models.TextField(blank=True, null=True, help_text="A short bio about yourself.")
 
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)  # Unique name for the tag
     
+
+    def __str__(self):
+        return self.name
+
+
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
