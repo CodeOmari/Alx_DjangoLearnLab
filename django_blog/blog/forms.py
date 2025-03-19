@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from .models import CustomUser, Post
+from .models import CustomUser, Post, Comment
 
 
 
@@ -41,3 +41,10 @@ class PostForm(forms.ModelForm):
             tags = [Tag.objects.get_or_create(name=name)[0] for name in tag_names]
             post.tags.set(tags)  # Update tags using set()
         return post
+
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']

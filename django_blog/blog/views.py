@@ -193,3 +193,67 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         """
         post = self.get_object()
         return self.request.user == post.author
+
+
+
+
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/add_comment.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post_id = self.kwargs['post_id']
+        context['post'] = get_object_or_404(Post, id=post_id)
+        return context
+
+    def form_valid(self, form):
+        post = get_object_or_404(Post, id=self.kwargs['post_id'])
+        form.instance.post = post
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # Use reverse to get the URL string and return it
+        return reverse('post_detail', kwargs={'pk': self.kwargs['post_id']})
+    
+
+
+
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/edit_comment.html'
+
+    def form_valid(self, form):
+        # Ensure that the logged-in user is the author of the comment
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # Redirect to the post's detail page after the comment is updated
+        #return redirect('post_detail', pk=self.object.post.pk)
+         # Use reverse to get the URL string and return it
+        return reverse('post_detail', kwargs={'pk': self.object.post.pk})
+
+    def test_func(self):
+        # Ensure only the author of the comment can edit it
+        comment = self.get_object()
+        return self.request.user == comment.author
+    
+
+
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'blog/comment_confirm_delete.html'
+    success_url = reverse_lazy('home')
+
+    def test_func(self):
+        # Ensure only the author of the comment can delete it
+        comment = self.get_object()
+        return self.request.user == comment.author
