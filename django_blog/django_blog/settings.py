@@ -81,7 +81,7 @@ DATABASES = {
         'USER': 'blog_admin',
         'PASSWORD': 'Blog_db@2025',
         'HOST': 'localhost',
-        'POST': '3306',
+        'PORT': '3306',
     }
 }
 
