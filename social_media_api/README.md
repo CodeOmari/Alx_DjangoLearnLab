@@ -24,9 +24,9 @@ This Endpoints can be accessed using your browser or Postman
 
 - Request Body(JSON):
     `{
-        "username": "your_username",  
-        "password": "your_password",  
-        "email": "your_email"  
+        "username": "your_username", <br>
+        "password": "your_password", <br>
+        "email": "your_email"
     }`
 
 2. Login
@@ -35,6 +35,6 @@ This Endpoints can be accessed using your browser or Postman
 
 - Request Body(JSON):
     `{
-        "username": "your_username",
-        "password": "your_password"
+        "username": "your_username", <br>
+        "password": "your_password" <br>
     }`
