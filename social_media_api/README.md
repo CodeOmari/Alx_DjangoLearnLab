@@ -23,18 +23,18 @@ This Endpoints can be accessed using your browser or Postman
 - URL: /accounts/register
 
 - Request Body(JSON):
-    {
+    `{
         "username": "your_username",
         "password": "your_password",
         "email": "your_email"
-    }
+    }`
 
 2. Login
 - HTTP METHOD: POST
 - URL: /accounts/login
 
 - Request Body(JSON):
-    {
+    `{
         "username": "your_username",
         "password": "your_password"
-    }
+    }`
